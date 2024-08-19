@@ -6,7 +6,7 @@ import math
 class pyCalculator:
     def __init__(self, master):
         self.master = master
-        master.title("Advance Python Calculator")
+        master.title("Advance Calculator")
         master.geometry("500x600")
         master.resizable(False, False)
 
