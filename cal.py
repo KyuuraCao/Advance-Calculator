@@ -46,6 +46,8 @@ class pyCalculator:
             cmd = lambda x=button: self.click(x)
             btn = ttk.Button(button_frame, text=button, command=cmd)
             btn.grid(row=row, column=col, sticky="nsew", padx=2, pady=2)
+            btn.bind("<Enter>", self.on_enter)
+            btn.bind("<Leave>", self.on_leave)
             col += 1
             if col > 4:
                 col = 0
@@ -91,8 +93,17 @@ class pyCalculator:
                     if isinstance(grandchild, ttk.Button):
                         color = random.choice(bright_colors)
                         style = ttk.Style()
-                        style.configure(f"Color.TButton", background=color)
-                        grandchild.configure(style=f"Color.TButton")
+                        style.configure(f"{grandchild['text']}.TButton", background=color)
+                        grandchild.configure(style=f"{grandchild['text']}.TButton")
+
+    def on_enter(self, event):
+        event.widget['style'] = f"hover.TButton"
+        style = ttk.Style()
+        style.configure(f"hover.TButton", background="#F0E68C", font=("Arial", 10, "bold"))
+
+    def on_leave(self, event):
+        button_text = event.widget['text']
+        event.widget['style'] = f"{button_text}.TButton"
 
     def evaluate_expression(self, expression):
         # Replace mathematical functions and constants with their Python equivalents
